@@ -1,0 +1,217 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+:root {
+    --primary: #6c5ce7;
+    --secondary: #a29bfe;
+    --dark: #2d3436;
+    --light: #f5f6fa;
+    --success: #00b894;
+    --danger: #d63031;
+    --purp: #C68EFD;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: var(--purp);
+    color: var(--dark);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    overflow-x: hidden;
+}
+
+h1 {
+    color: var(--light);
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 2.5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 1s ease;
+}
+
+.game-container {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    perspective: 1000px;
+}
+
+.board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 10px;
+    background-color: var(--secondary);
+    padding: 15px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(108, 92, 231, 0.3);
+    transform-style: preserve-3d;
+    animation: rotateIn 1s ease;
+}
+
+.cell {
+    position: relative;
+    width: 100%;
+    height: 100px;
+    background-color: var(--light);
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transform-style: preserve-3d;
+}
+
+.cell:hover {
+    transform: translateY(-5px) scale(1.03);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.cell.x::before, .cell.x::after {
+    content: '';
+    position: absolute;
+    width: 15px;
+    height: 70px;
+    background-color: var(--danger);
+    border-radius: 10px;
+}
+
+.cell.x::before {
+    transform: rotate(45deg);
+}
+
+.cell.x::after {
+    transform: rotate(-45deg);
+}
+
+.cell.o::before {
+    content: '';
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border: 15px solid var(--success);
+    border-radius: 50%;
+}
+
+.status {
+    margin: 20px 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+    text-align: center;
+    color: var(--dark);
+    animation: fadeIn 1s ease;
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    animation: slideUp 1s ease;
+}
+
+button {
+    background-color: var(--light);
+    color: black;
+    border: none;
+    padding: 12px 25px;
+    font-size: 1rem;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(108, 92, 231, 0.3);
+}
+
+button:hover {
+    background-color: var(--secondary);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 15px rgba(108, 92, 231, 0.3);
+}
+
+button:active {
+    transform: translateY(1px);
+}
+
+.winning-cell {
+    animation: pulse 1s infinite, glow 1.5s infinite alternate;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from { 
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to { 
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes rotateIn {
+    from { 
+        opacity: 0;
+        transform: rotateX(90deg);
+    }
+    to { 
+        opacity: 1;
+        transform: rotateX(0);
+    }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+@keyframes glow {
+    from { box-shadow: 0 0 5px rgba(0, 184, 148, 0.5); }
+    to { box-shadow: 0 0 20px rgba(0, 184, 148, 0.8); }
+}
+
+.confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: #f00;
+    border-radius: 50%;
+    animation: confettiFall 5s linear forwards;
+}
+
+@keyframes confettiFall {
+    0% {
+        transform: translateY(-100px) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(1000px) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+@media (max-width: 500px) {
+    h1 {
+        font-size: 2rem;
+    }
+    
+    .cell {
+        height: 80px;
+    }
+}
